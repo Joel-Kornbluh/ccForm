@@ -1,6 +1,6 @@
-# [ngBoilerplate](http://joshdmiller.github.com/ng-boilerplate) [![Build Status](https://api.travis-ci.org/ngbp/ngbp.png?branch=v0.3.2-release)](https://travis-ci.org/ngbp/ngbp)
+# [ccForm]
 
-An opinionated kickstarter for [AngularJS](http://angularjs.org) projects.
+A Visualized credit card validator
 
 ***
 
@@ -16,10 +16,6 @@ $ npm install
 $ bower install
 $ grunt watch
 ```
-
-Finally, open `file:///path/to/ng-boilerplate/build/index.html` in your browser.
-
-Happy hacking!
 
 ## Purpose
 
@@ -365,15 +361,4 @@ Naturally, I am open to all manner of ideas and suggestions. See the
 
 See the [issues list](http://github.com/joshdmiller/ng-boilerplate/issues). And
 feel free to submit your own!
-
-### Contributing
-
-This is an opinionated kickstarter, but the opinions are fluid and
-evidence-based. Don't like the way I did something? Think you know of a better
-way? Have an idea to make this more useful? Let me know! You can contact me
-through all the usual channels or you can open an issue on the GitHub page. If
-you're feeling ambitious, you can even submit a pull request - how thoughtful
-of you!
-
-So join the team! We're good people.
 
