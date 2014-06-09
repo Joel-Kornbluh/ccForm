@@ -1,8 +1,12 @@
-<h2>Enter your CC info below</h2>
+<h2></h2>
 
 <div class="cc-form-container" ng-controller="CCFormCtrl">
-	<form ng-cc-form>
-		<input type="text" class="" ng-pattern="/[0-9]/"/>
-		
+	<form class="form-inline" cc-form >
+		<fieldset>
+			<legend>Enter your Credit Card info below</legend>
+			<input type="text" class="form-control" ng-model="ccInfo.cardholderName" placeholder="Cardholders Name"/>
+			<input type="text" class="form-control" ng-pattern="/[0-9]/" cc-card-number ng-model="ccInfo.cardNumber" placeholder="Card Number"/>
+			<input type="date" class="form-control" ng-model="ccInfo.expires" placeholder="Expiration Date"/>
+		</fieldset>
 	</form>
 </div>
