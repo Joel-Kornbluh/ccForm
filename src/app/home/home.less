@@ -1,8 +1,79 @@
+.x-border{
+	border: 0; 
+}
+
+.x-border-top{
+	border-top: 0; 
+}
+
+.x-border-right{
+	border-right: 0; 
+}
+
+.x-border-bottom{
+	border-bottom: 0; 
+}
+
+.x-border-left{
+	border-left: 0; 
+}
+
+.cc-form label{
+	display: block;
+	margin-bottom: 0;
+}
+
+.cc-form .form-group{
+	margin: 0;
+	padding: 0;
+
+}
+
+.cc-form .form-control{
+	border-radius: 0;
+	border-bottom-width: 0;	
+}
+
+.cc-card{
+	margin-top: 40px;	
+}
+
+@media (min-width: 768px){
+	.cc-form{
+		margin-top: 80px;
+	}
+
+	.cc-card{
+		margin-top: 0;
+	}
+
+	.cc-form .form-control{
+		border-bottom-width: 1px;
+	}
+
+	.cc-form .form-group:nth-of-type(3) .form-control, .cc-form .form-group:nth-of-type(4) .form-control, .cc-form .form-group:nth-of-type(5) .form-control{
+		border-top-width: 0;
+	}
+
+	.cc-form .form-group:nth-of-type(2) .form-control, .cc-form .form-group:nth-of-type(4) .form-control, .cc-form .form-group:nth-of-type(5) .form-control{
+		border-left-width: 0;
+	}
+}
+
+.saved-payment-methods{
+	margin-top: 40px;
+}
+
+
+
+
+
 .logo {
 	height: 36px;
 	width: 60px;
 	font-style: italic;
 }
+
 .logo, .logo:before, .logo:after {
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;

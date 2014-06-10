@@ -17,23 +17,82 @@ homeModule.config(['$stateProvider', function( $stateProvider ){
   });
 }]);
 
-homeModule.factory('PaymentMethods', ['$resource', function($resource){
+homeModule.factory('PaymentMethods', ['$resource', '$http', function($resource, $http){
 	
-	var paymentMethodUrl = 'http://127.0.0.1/temp/paymentMethods/user/:user';
+	var paymentMethodsPath = 'http://127.0.0.1/temp/paymentMethods/';
+	
+	/*
+	$http({
+		url: paymentMethodsPath + 'user/god',
+		method: 'GET',
+		responseType: 'json',
+		transformResponse: function(response){
+			return [].concat(response || []);
+		}
+	}).success(function(response, a,b,c,d){
+		console.log(response, a,b(),c,d);
+	}).error(function(response, a,b,c,d){
+		console.log(response, a,b(),c,d);
+	});
+	*/
 
-	return $resource(paymentMethodUrl, {name: 'god'}, null, {stripTrailingSlashes: false});
+	var get = {
+		url: paymentMethodsPath + 'user/:user',
+		method: 'GET',
+		responseType: 'json',
+		isArray: true,
+		params: {user: 'god'},
+		transformResponse: function(response){ 
+			return angular.isArray(response) ? response : []; 
+		}
+	};
+
+	return $resource(paymentMethodsPath, null, {get: get}, {stripTrailingSlashes: false});
 }]);
 
 homeModule.controller('HomeCtrl', ['$scope', 'PaymentMethods', function( $scope, PaymentMethods ){
 	
-	$scope.ccInfo = {
+	/*
+	$($element).on('focusin', '[name=cid]', function(){
+		$scope.cardClasses.flipped = true;
+	}).on('focusout', '[name=cid]', function(){
+		$scope.cardClasses.flipped = false;
+	});
+	*/
+	
+	var username = 'god';
+
+	$scope.currentCC = {
 		/** @type {?string} */
-		cardholderName: 'test',
+		name: 'Reuven Rivlin',
 		
 		/** @type {?string} */
-		cardNumber: null,
+		number: '4134506738499560',
+
+		/** @type {?string} */
+		cid: '242',
 
 		/** @type {date} */
-		expires: '2019-03-12'
+		expires: '2019-03'
 	};
+
+	$scope.savePaymentMethod = function(e){
+		
+		alert('Thanks!');
+		window.qwerty = angular.element(e.currentTarget);
+	};
+
+	$scope.savedPaymentMethods = PaymentMethods.get({user: username});
 }]);
+
+homeModule.directive('ccTestEltDir', function(){
+	return {
+
+	}
+});
+
+homeModule.directive('ccTestInputDir', function(){
+	return {
+
+	}
+});

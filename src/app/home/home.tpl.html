@@ -1,12 +1,77 @@
 <h2></h2>
 
-<div class="cc-form-container" ng-controller="CCFormCtrl">
-	<form class="form-inline" cc-form >
+<div ng-controller="HomeCtrl">
+
+	<form class="form cc-form col-sm-8" cc-form ng-submit="savePaymentMethod($event)">
 		<fieldset>
-			<legend>Enter your Credit Card info below</legend>
-			<input type="text" class="form-control" ng-model="ccInfo.cardholderName" placeholder="Cardholders Name"/>
-			<input type="text" class="form-control" ng-pattern="/[0-9]/" cc-card-number ng-model="ccInfo.cardNumber" placeholder="Card Number"/>
-			<input type="date" class="form-control" ng-model="ccInfo.expires" placeholder="Expiration Date"/>
+			<legend>Enter your Payment info below</legend>
+
+			<div class="form-group col-sm-6">
+				<label>
+					<!-- <div class="col-sm-5 control-label">Cardholder's Name as it appears on Card</div> -->
+					<input type="text" class="form-control" ng-model="currentCC.name" placeholder="Cardholders Name"/>
+				</label>
+			</div>
+
+			<div class="form-group col-sm-6">
+				<label>
+					<!-- <div class="col-sm-5 control-label">Card number</div> -->
+					<input type="text" class="form-control" ng-pattern="/\d/" minlength="12" maxlength="19" ng-model="currentCC.number" placeholder="Card Number" cc-card-number/>
+				</label>
+			</div>
+
+			<div class="form-group col-sm-3">
+				<label>
+					<!-- <div class="col-sm-5 control-label">CID from the back of the Card</div> -->
+					<input type="text" class="form-control" ng-model="currentCC.cid" minlength="3" maxlength="4" placeholder="CID"/>
+				</label>
+			</div>
+
+			<div class="form-group col-sm-3">
+				<label>
+					<!-- <div class="col-sm-5 control-label">Expiration Date</div> -->
+					<input type="month" class="form-control" ng-model="currentCC.expires" placeholder="Expiration Date"/>
+				</label>
+			</div>
+
+			<div class="form-group col-sm-6">
+				<label>
+					<!-- <div class="col-sm-5 control-label">Expiration Date</div> -->
+					<input type="submit" class="form-control btn btn-primary" value="Save Payment Method" />
+				</label>
+			</div>
 		</fieldset>
 	</form>
+
+	<div class="col-sm-4 cc-card" cc-card ></div>
+	<div class="clearfix"></div>
 </div>
+
+
+
+<div class="saved-payment-methods">
+	<h2>Your saved Payment methods</h2>
+	<table class="table table-striped table-hover cc-list">
+		<thead>
+			<th>#</th>
+			<th class="name">Cardholder Name</th>
+			<th class="number">Card Number</th>
+			<th class="cid">CID</th>
+			<th class="expires">expiration Date</th>
+		</thead>
+		<tbody>
+			<tr ng-repeat="cc in savedPaymentMethods">
+				<td class="index">{{$index}}</td>
+				<td class="name">{{cc.name}}</td>
+				<td class="number">{{cc.number}}</td>
+				<td class="cid">***</td>
+				<td class="expires">{{cc.expires}}</td>
+			</tr>
+
+		</tbody>
+	</table>
+</div>
+
+
+<div cc-test-elt-dir></div>
+<input type="text" cc-test-input-dir/>

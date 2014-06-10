@@ -1,0 +1,22 @@
+<div class="card-container">
+  <div ng-class="{card: true, identified: cardClasses.identified, maestro: cardClasses.maestro, dinersclub: cardClasses.dinersclub, laser: cardClasses.laser, jcb: cardClasses.jcb, unionpay: cardClasses.unionpay, discover: cardClasses.discover, mastercard: cardClasses.mastercard, amex: cardClasses.amex, visa: cardClasses.visa}">
+    <div class="front">
+      <div class="logo visa">visa</div>
+      <div class="logo mastercard">MasterCard</div>
+      <div class="logo amex"></div>
+      <div class="logo discover">discover</div>
+      <div class="lower">
+        <div class="shiny"></div>
+        <div class="cvc display" ng-class="{focused: focusState.cid}">{{currentCC.cid | cidNumber }}</div>
+        <div class="number display" ng-class="{focused: focusState.number}">{{currentCC.number | cardNumber}}</div>
+        <div class="name display" ng-class="{focused: focusState.name}">{{currentCC.name}}</div>
+        <div class="expiry display" ng-class="{focused: focusState.expires}">{{currentCC.expires | expirationDate}}</div>
+      </div>
+    </div>
+    <div class="back" cc-test>
+      <div class="bar"></div>
+      <div class="cvc display" ng-class="{focused: focusState.cid}">{{currentCC.cid | cidNumber }}</div>
+      <div class="shiny"></div>
+    </div>
+  </div>
+</div>
