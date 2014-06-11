@@ -1,6 +1,6 @@
 # [ccForm]
 
-A Visualized credit card validator
+Visual Credit Card Validator
 
 ***
 
@@ -9,8 +9,8 @@ A Visualized credit card validator
 Install Node.js and then:
 
 ```sh
-$ git clone git://github.com/joshdmiller/ng-boilerplate
-$ cd ng-boilerplate
+$ git clone git://github.com/joel-kornbluh/ccForm
+$ cd ccForm
 $ sudo npm -g install grunt-cli karma bower
 $ npm install
 $ bower install
@@ -19,7 +19,7 @@ $ grunt watch
 
 ## Purpose
 
-`ngBoilerplate` is designed to make life easy by providing a basic framework
+`ccForm` is designed to make life easy by providing a basic framework
 with which to kickstart AngularJS projects. It contains a best-practice
 directory structure to ensure code reusability and maximum scalability.
 ngBoilerplate also comes prepackaged with the most popular design frameworks

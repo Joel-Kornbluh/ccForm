@@ -16,28 +16,27 @@
 			<div class="form-group col-sm-6">
 				<label>
 					<!-- <div class="col-sm-5 control-label">Card number</div> -->
-					<input type="text" class="form-control" ng-pattern="/\d/" minlength="12" maxlength="19" ng-model="currentCC.number" placeholder="Card Number" cc-card-number/>
+					<input type="text" class="form-control nob-l" ng-pattern="/\d/" minlength="12" maxlength="19" ng-model="currentCC.number" placeholder="Card Number" cc-card-number/>
 				</label>
 			</div>
 
 			<div class="form-group col-sm-3">
 				<label>
 					<!-- <div class="col-sm-5 control-label">CID from the back of the Card</div> -->
-					<input type="text" class="form-control" ng-model="currentCC.cid" minlength="3" maxlength="4" placeholder="CID"/>
+					<input type="text" class="form-control nob-t" ng-model="currentCC.cid" minlength="3" maxlength="4" placeholder="CID"/>
 				</label>
 			</div>
 
 			<div class="form-group col-sm-3">
 				<label>
 					<!-- <div class="col-sm-5 control-label">Expiration Date</div> -->
-					<input type="month" class="form-control" ng-model="currentCC.expires" placeholder="Expiration Date"/>
+					<input type="month" class="form-control nob-tl" ng-model="currentCC.expires" placeholder="Expiration Date"/>
 				</label>
 			</div>
 
 			<div class="form-group col-sm-6">
 				<label>
-					<!-- <div class="col-sm-5 control-label">Expiration Date</div> -->
-					<input type="submit" class="form-control btn btn-primary" value="Save Payment Method" />
+					<input type="submit" class="form-control nob-tl btn btn-primary" value="Save Payment Method" />
 				</label>
 			</div>
 		</fieldset>

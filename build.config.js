@@ -61,10 +61,13 @@ module.exports = {
     js: [
       'vendor/jquery/dist/jquery.min.js',
       'vendor/angular/angular.js',
-      'vendor/angular-resource/angular-resource.js',
+      'vendor/angular-ui-router/release/angular-ui-router.min.js',
+      'vendor/angular-resource/angular-resource.min.js',
+      'vendor/angular-sanitize/angular-sanitize.min.js',
+      'vendor/angular-cookies/angular-cookies.min.js',
+      'vendor/angular-bootstrap/ui-bootstrap.min.js',
       'vendor/angular-bootstrap/ui-bootstrap-tpls.min.js',
       'vendor/placeholders/angular-placeholders-0.0.1-SNAPSHOT.min.js',
-      'vendor/angular-ui-router/release/angular-ui-router.js',
       'vendor/angular-ui-utils/modules/route/route.js'
     ],
     css: [

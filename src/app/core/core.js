@@ -156,34 +156,50 @@ ccFormModule.factory('cards', function() {
 
 	return proto;
 });
+/*
+ccFormModule.value('testVal', 'this is the testVal');
 
 ccFormModule.provider('test', function(){
 	console.log('provider init...');
 	
-	var SumClass = function(){
+	var x,y,z;
+	var Point3D = function(){
 		console.log('service init...');
-		var sum = 0;
-
-		this.add = function(num){
-			return (sum += (parseInt(num) || 1));
+		
+		this.x = x;
+		this.y = y;
+		this.z = z;
+		
+		this.sum = function(num){
+			return x * y * z;
 		}
 	}
 
-	return {
-		$get: function(){
-			console.log('injector is calling...');
-			return new SumClass();
-		}
+	this.configPoint = function(x, y, z){
+		x = x + (y / 2);
+		y = y;
+		z = z + 180;
+	}
+
+	this.$get = function(){
+		console.log('injector is calling...');
+		return new Point3D(x, y, z);
 	}
 		
 });
 
-ccFormModule.directive('ccTestTest', ['cards', 'test', function(cards, test) {
-	console.log(test.add(1));
+ccFormModule.config(['test', function(test){
+	console.log('configuring...');
+	test.configPoint(30, 180, 90);
+}]);
+
+ccFormModule.directive('ccTest', ['cards', 'test', 'testVal', function(cards, test, testVal) {
+	console.log(test);
 	return {
 
 	};
 }]);
+*/
 
 ccFormModule.directive('ccCardNumber', ['cards', function(cards) {
 
@@ -497,6 +513,7 @@ ccFormModule.filter('cardNumber', ['cards', function(cards){
 }]);
 
 ccFormModule.filter('cidNumber', function(){
+
 	return function(input){
 		return input; //'&#x2022;&#x2022;&#x2022&#x2022;;';
 	}

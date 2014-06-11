@@ -1,5 +1,10 @@
 module.exports = function ( grunt ) {
   
+  /**
+   * Path to the closure compiler
+   */
+  var CLOSURE_COMPILER_PATH = 'C:\\xampp\\htdocs\\closure\\closure-compiler';
+
   /** 
    * Load required Grunt tasks. These are installed based on the versions listed
    * in `package.json` when you do `npm install` in this directory.
@@ -16,6 +21,11 @@ module.exports = function ( grunt ) {
   grunt.loadNpmTasks('grunt-karma');
   grunt.loadNpmTasks('grunt-ngmin');
   grunt.loadNpmTasks('grunt-html2js');
+  grunt.loadNpmTasks('grunt-contrib-htmlmin');
+  grunt.loadNpmTasks('grunt-contrib-imagemin');
+  grunt.loadNpmTasks('grunt-closure-compiler');
+  grunt.loadNpmTasks('grunt-closure-tools');
+  
 
   /**
    * Load in our build configuration file.
@@ -314,6 +324,22 @@ module.exports = function ( grunt ) {
     },
 
     /**
+     * The `closure-compiler` task compiles all `.js` files.
+     */
+
+     'closure-compiler': {
+     	frontend: {
+     		options: {
+
+     		},
+     		closurePath: CLOSURE_COMPILER_PATH,
+     		js: '<%= concat.compile_js.dest %>',
+			jsOutputFile: '<%= concat.compile_js.dest %>',
+			maxBuffer: 200,
+     	}
+     },
+
+    /**
      * The `index` task compiles the `index.html` file as a Grunt template. CSS
      * and JS files co-exist here but they get split apart later.
      */
@@ -479,18 +505,21 @@ module.exports = function ( grunt ) {
   grunt.registerTask( 'watch', [ 'build', 'karma:unit', 'delta' ] );
 
   /**
-   * The default task is to build and compile.
-   */
-  grunt.registerTask( 'default', [ 'build', 'compile' ] );
-
-  /**
    * The `build` task gets your app ready to run for development and testing.
    */
   grunt.registerTask( 'build', [
-    'clean', 'html2js', 'jshint', 'less:build',
-    'concat:build_css', 'copy:build_app_assets', 'copy:build_vendor_assets',
-    'copy:build_appjs', 'copy:build_vendorjs', 'index:build', 'karmaconfig',
-    'karma:continuous' 
+    'clean',
+    'html2js',
+    /*'jshint',*/ 
+    'less:build',
+    'concat:build_css', 
+    'copy:build_app_assets', 
+    'copy:build_vendor_assets',
+    'copy:build_appjs', 
+    'copy:build_vendorjs',
+    'index:build', 
+    'karmaconfig',
+    /*'karma:continuous' */
   ]);
 
   /**
@@ -498,8 +527,20 @@ module.exports = function ( grunt ) {
    * minifying your code.
    */
   grunt.registerTask( 'compile', [
-    'less:compile', 'copy:compile_assets', 'ngmin', 'concat:compile_js', 'uglify', 'index:compile'
+  	'build',
+    'less:compile', 
+    'copy:compile_assets', 
+    'ngmin',
+    'concat:compile_js', 
+    'uglify',
+    /*'closure-compiler',*/
+    'index:compile'
   ]);
+
+  /**
+   * The default task is to build and compile.
+   */
+  grunt.registerTask( 'default', [ 'build' ] );
 
   /**
    * A utility function to get all app JavaScript sources.
