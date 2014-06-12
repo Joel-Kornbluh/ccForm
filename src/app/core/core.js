@@ -156,51 +156,57 @@ ccFormModule.factory('cards', function() {
 
 	return proto;
 });
-/*
-ccFormModule.value('testVal', 'this is the testVal');
 
-ccFormModule.provider('test', function(){
-	console.log('provider init...');
+var testProvider = ccFormModule.factory('test', ['$q', function($q){
 	
-	var x,y,z;
-	var Point3D = function(){
-		console.log('service init...');
+	return function(){
 		
-		this.x = x;
-		this.y = y;
-		this.z = z;
-		
-		this.sum = function(num){
-			return x * y * z;
-		}
+		return $q.defer();
 	}
-
-	this.configPoint = function(x, y, z){
-		x = x + (y / 2);
-		y = y;
-		z = z + 180;
-	}
-
-	this.$get = function(){
-		console.log('injector is calling...');
-		return new Point3D(x, y, z);
-	}
-		
-});
-
-ccFormModule.config(['test', function(test){
-	console.log('configuring...');
-	test.configPoint(30, 180, 90);
+	
 }]);
 
-ccFormModule.directive('ccTest', ['cards', 'test', 'testVal', function(cards, test, testVal) {
-	console.log(test);
-	return {
+ccFormModule.config(['$provide', '$compileProvider', '$filterProvider', function(p, c, f){
 
+}]);
+
+ccFormModule.directive('ccTest', ['$q', 'test', function($q, test) {
+	
+	var ps = test();
+	
+	var then = $q.when(ps).then(function(a){
+		console.log('promise A resolved...', a);
+		return a;
+	}, function(a){
+		console.log('promise A rejected...', a);
+		return $q.reject(a);
+	}, function(a){
+		ps.resolve($q.reject('oops...'));
+		console.log('promise A was notified...', a);
+	});
+
+	var tt = then.then(function(a){
+		console.log('promise B resolved...', a);
+	}, function(a){
+		console.log('promise B rejected...', a);
+	});
+
+	//console.log('is then the same as promise? ', then === ps.promise);
+
+	$.get('http://127.0.0.1/xampp', null, function(response){
+		
+		ps.notify('responded...');
+	});
+	
+
+	return {
+		link: function(a,b,c){
+			console.log('in directive... ', a, b, c);
+		}
 	};
 }]);
-*/
 
+ 
 ccFormModule.directive('ccCardNumber', ['cards', function(cards) {
 
 	return {
@@ -491,7 +497,6 @@ ccFormModule.directive('ccCardNumber', ['cards', function(cards) {
 				val = $target.val() + digit;
 				return val.length <= 4;
 			};
-
 		}
 	};
 }]);
@@ -504,10 +509,10 @@ ccFormModule.directive('ccCard', ['cards', function(cards) {
 	}
 }]);
 
-ccFormModule.filter('cardNumber', ['cards', function(cards){
+ccFormModule.filter('cardNumber', ['$sce', 'cards', function($sce, cards){
 
 	return function(input){
-		if(!input) return '&#x2022;&#x2022;&#x2022;&#x2022; &#x2022;&#x2022;&#x2022;&#x2022; &#x2022;&#x2022;&#x2022;&#x2022; &#x2022;&#x2022;&#x2022;&#x2022;';
+		if(!input) return '.... .... .... ....';//$sce.trustAsHtml('&#x2022;&#x2022;&#x2022;&#x2022; &#x2022;&#x2022;&#x2022;&#x2022; &#x2022;&#x2022;&#x2022;&#x2022; &#x2022;&#x2022;&#x2022;&#x2022;');
 		return input.replace(/\D/g, '').replace(/(\d{4})/g, '$1 ');
 	}
 }]);

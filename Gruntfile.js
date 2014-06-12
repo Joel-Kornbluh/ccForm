@@ -334,8 +334,8 @@ module.exports = function ( grunt ) {
      		},
      		closurePath: CLOSURE_COMPILER_PATH,
      		js: '<%= concat.compile_js.dest %>',
-			jsOutputFile: '<%= concat.compile_js.dest %>',
-			maxBuffer: 200,
+			jsOutputFile: '<%= compile_dir %>/assets/<%= pkg.name %>-<%= pkg.version %>-compiled.js',
+			maxBuffer: 1000,
      	}
      },
 
@@ -435,7 +435,7 @@ module.exports = function ( grunt ) {
         files: [ 
           '<%= app_files.js %>'
         ],
-        tasks: [ 'jshint:src', 'karma:unit:run', 'copy:build_appjs' ]
+        tasks: [ /*'jshint:src', 'karma:unit:run',*/ 'copy:build_appjs' ]
       },
 
       /**
@@ -484,7 +484,7 @@ module.exports = function ( grunt ) {
         files: [
           '<%= app_files.jsunit %>'
         ],
-        tasks: [ 'jshint:test', 'karma:unit:run' ],
+        tasks: [ /*'jshint:test',*/ 'karma:unit:run' ],
         options: {
           livereload: false
         }
@@ -495,31 +495,18 @@ module.exports = function ( grunt ) {
   grunt.initConfig( grunt.util._.extend( taskConfig, userConfig ) );
 
   /**
-   * In order to make it safe to just compile or copy *only* what was changed,
-   * we need to ensure we are starting from a clean, fresh build. So we rename
-   * the `watch` task to `delta` (that's why the configuration var above is
-   * `delta`) and then add a new task called `watch` that does a clean build
-   * before watching for changes.
-   */
-  grunt.renameTask( 'watch', 'delta' );
-  grunt.registerTask( 'watch', [ 'build', 'karma:unit', 'delta' ] );
-
-  /**
    * The `build` task gets your app ready to run for development and testing.
    */
   grunt.registerTask( 'build', [
     'clean',
     'html2js',
-    /*'jshint',*/ 
     'less:build',
     'concat:build_css', 
     'copy:build_app_assets', 
     'copy:build_vendor_assets',
     'copy:build_appjs', 
     'copy:build_vendorjs',
-    'index:build', 
-    'karmaconfig',
-    /*'karma:continuous' */
+    'index:build'
   ]);
 
   /**
@@ -528,19 +515,30 @@ module.exports = function ( grunt ) {
    */
   grunt.registerTask( 'compile', [
   	'build',
-    'less:compile', 
-    'copy:compile_assets', 
-    'ngmin',
-    'concat:compile_js', 
-    'uglify',
-    /*'closure-compiler',*/
+  	/*'jshint',*/
+  	'karmaconfig',
+    'karma:continuous',
+    'less:compile',
+    'copy:compile_assets',
+    'concat:compile_js',
+    'closure-compiler',
     'index:compile'
   ]);
 
   /**
-   * The default task is to build and compile.
+   * The default task is to build
    */
   grunt.registerTask( 'default', [ 'build' ] );
+
+  /**
+   * In order to make it safe to just compile or copy *only* what was changed,
+   * we need to ensure we are starting from a clean, fresh build. So we rename
+   * the `watch` task to `delta` (that's why the configuration var above is
+   * `delta`) and then add a new task called `watch` that does a clean build
+   * before watching for changes.
+   */
+  grunt.renameTask( 'watch', 'delta' );
+  grunt.registerTask( 'watch', [ 'build', 'delta' ] );
 
   /**
    * A utility function to get all app JavaScript sources.
@@ -596,7 +594,7 @@ module.exports = function ( grunt ) {
   grunt.registerMultiTask( 'karmaconfig', 'Process karma config templates', function () {
     var jsFiles = filterForJS( this.filesSrc );
     
-    grunt.file.copy( 'karma/karma-unit.tpl.js', grunt.config( 'build_dir' ) + '/karma-unit.js', { 
+    grunt.file.copy( 'karma-unit.js', grunt.config( 'build_dir' ) + '/karma-unit.js', { 
       process: function ( contents, path ) {
         return grunt.template.process( contents, {
           data: {
