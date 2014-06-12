@@ -157,7 +157,7 @@ ccFormModule.factory('cards', function() {
 	return proto;
 });
 
-var testProvider = ccFormModule.factory('test', ['$q', function($q){
+ccFormModule.factory('test', ['$q', function($q){
 	
 	return function(){
 		
@@ -526,6 +526,8 @@ ccFormModule.filter('cidNumber', function(){
 
 ccFormModule.filter('expirationDate', function(){
 	return function(input){
-		return input;//'&#x2022;&#x2022; / &#x2022;&#x2022;';
+		if(!input) return '../..'; //'&#x2022;&#x2022; / &#x2022;&#x2022;';
+		var date = input.split('-');
+		return date[1] + '/' + date[0].substring(2);
 	}
 });

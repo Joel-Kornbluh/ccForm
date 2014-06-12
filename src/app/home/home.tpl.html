@@ -9,28 +9,28 @@
 			<div class="form-group col-sm-6">
 				<label>
 					<!-- <div class="col-sm-5 control-label">Cardholder's Name as it appears on Card</div> -->
-					<input type="text" class="form-control" ng-model="currentCC.name" placeholder="Cardholders Name"/>
+					<input type="text" class="form-control" name="name" ng-model="currentCC.name" ng-focus="focused($event)" placeholder="Cardholders Name"/>
 				</label>
 			</div>
 
 			<div class="form-group col-sm-6">
 				<label>
 					<!-- <div class="col-sm-5 control-label">Card number</div> -->
-					<input type="text" class="form-control nob-l" ng-pattern="/\d/" minlength="12" maxlength="19" ng-model="currentCC.number" placeholder="Card Number" cc-card-number/>
+					<input type="text" class="form-control nob-l" name="number" ng-pattern="/\d/" minlength="12" maxlength="19" ng-model="currentCC.number" placeholder="Card Number" ng-focus="focused($event)" cc-card-number/>
 				</label>
 			</div>
 
 			<div class="form-group col-sm-3">
 				<label>
 					<!-- <div class="col-sm-5 control-label">CID from the back of the Card</div> -->
-					<input type="text" class="form-control nob-t" ng-model="currentCC.cid" minlength="3" maxlength="4" placeholder="CID"/>
+					<input type="text" class="form-control nob-t" name="cid" ng-model="currentCC.cid" minlength="3" maxlength="4" placeholder="CID" ng-focus="focused($event)"/>
 				</label>
 			</div>
 
 			<div class="form-group col-sm-3">
 				<label>
 					<!-- <div class="col-sm-5 control-label">Expiration Date</div> -->
-					<input type="month" class="form-control nob-tl" ng-model="currentCC.expires" placeholder="Expiration Date"/>
+					<input type="month" class="form-control nob-tl" name="expires" ng-model="currentCC.expires" placeholder="Expiration Date" ng-focus="focused($event)"/>
 				</label>
 			</div>
 

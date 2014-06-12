@@ -435,7 +435,7 @@ module.exports = function ( grunt ) {
         files: [ 
           '<%= app_files.js %>'
         ],
-        tasks: [ /*'jshint:src', 'karma:unit:run',*/ 'copy:build_appjs' ]
+        tasks: [ /*'jshint:src',*/ 'karma:unit:run', 'copy:build_appjs' ]
       },
 
       /**
@@ -506,7 +506,9 @@ module.exports = function ( grunt ) {
     'copy:build_vendor_assets',
     'copy:build_appjs', 
     'copy:build_vendorjs',
-    'index:build'
+    'index:build',
+    'karmaconfig',
+    'karma:continuous'
   ]);
 
   /**
@@ -516,8 +518,6 @@ module.exports = function ( grunt ) {
   grunt.registerTask( 'compile', [
   	'build',
   	/*'jshint',*/
-  	'karmaconfig',
-    'karma:continuous',
     'less:compile',
     'copy:compile_assets',
     'concat:compile_js',

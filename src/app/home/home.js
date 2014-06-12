@@ -52,14 +52,10 @@ homeModule.factory('PaymentMethods', ['$resource', '$http', function($resource, 
 
 homeModule.controller('HomeCtrl', ['$scope', 'PaymentMethods', function( $scope, PaymentMethods ){
 	
-	/*
-	$($element).on('focusin', '[name=cid]', function(){
-		$scope.cardClasses.flipped = true;
-	}).on('focusout', '[name=cid]', function(){
-		$scope.cardClasses.flipped = false;
-	});
-	*/
-	
+	$scope.focused = function(evt){
+		$scope.focusState = angular.element(evt.currentTarget).attr('name');
+	};
+
 	var username = 'god';
 
 	$scope.currentCC = {
@@ -85,9 +81,12 @@ homeModule.controller('HomeCtrl', ['$scope', 'PaymentMethods', function( $scope,
 	$scope.savedPaymentMethods = PaymentMethods.get({user: username});
 }]);
 
-homeModule.directive('ccTestEltDir', function(){
+homeModule.directive('ccFocusState', function(){
 	return {
-
+		restrict: 'A',
+		link: function(){
+			console.log(arguments);
+		}
 	}
 });
 
