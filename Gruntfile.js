@@ -18,11 +18,12 @@ module.exports = function ( grunt ) {
   grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-conventional-changelog');
   grunt.loadNpmTasks('grunt-bump');
-  grunt.loadNpmTasks('grunt-karma');
   grunt.loadNpmTasks('grunt-ngmin');
   grunt.loadNpmTasks('grunt-html2js');
   grunt.loadNpmTasks('grunt-contrib-htmlmin');
   grunt.loadNpmTasks('grunt-contrib-imagemin');
+  grunt.loadNpmTasks('grunt-karma');
+  grunt.loadNpmTasks('grunt-protractor-runner');
   grunt.loadNpmTasks('grunt-closure-compiler');
   grunt.loadNpmTasks('grunt-closure-tools');
   
@@ -30,7 +31,7 @@ module.exports = function ( grunt ) {
   /**
    * Load in our build configuration file.
    */
-  var userConfig = require( './build.config.js' );
+  var userConfig = require( './build-conf.js' );
 
   /**
    * This is the configuration object Grunt uses to give each plugin its 
@@ -312,15 +313,35 @@ module.exports = function ( grunt ) {
      */
     karma: {
       options: {
-        configFile: '<%= build_dir %>/karma-unit.js'
+        configFile: '<%= build_dir %>/karma-conf.js'
       },
       unit: {
-        port: 9019,
+        port: 9876,
         background: true
       },
       continuous: {
         singleRun: true
       }
+    },
+
+    /**
+     * The Protractor configurations.
+     */
+    protractor: {
+      options: {
+        configFile: "protractor-conf.js",
+        keepAlive: true,
+        noColor: false,
+        args: {
+          // Arguments passed to the command
+        }
+      },
+      build: {
+        options: {
+          configFile: 'protractor-conf.js',
+          args: {} // Target-specific arguments
+        }
+      },
     },
 
     /**
@@ -484,7 +505,7 @@ module.exports = function ( grunt ) {
         files: [
           '<%= app_files.jsunit %>'
         ],
-        tasks: [ /*'jshint:test',*/ 'karma:unit:run' ],
+        tasks: [ /*'jshint:test',*/ 'karma:unit:run', 'protractor' ],
         options: {
           livereload: false
         }
@@ -508,7 +529,8 @@ module.exports = function ( grunt ) {
     'copy:build_vendorjs',
     'index:build',
     'karmaconfig',
-    'karma:continuous'
+    'karma:continuous',
+    'protractor'
   ]);
 
   /**
@@ -521,7 +543,7 @@ module.exports = function ( grunt ) {
     'less:compile',
     'copy:compile_assets',
     'concat:compile_js',
-    'closure-compiler',
+    /*'closure-compiler',*/
     'index:compile'
   ]);
 
@@ -594,7 +616,7 @@ module.exports = function ( grunt ) {
   grunt.registerMultiTask( 'karmaconfig', 'Process karma config templates', function () {
     var jsFiles = filterForJS( this.filesSrc );
     
-    grunt.file.copy( 'karma-unit.js', grunt.config( 'build_dir' ) + '/karma-unit.js', { 
+    grunt.file.copy( 'karma-conf.js', grunt.config( 'build_dir' ) + '/karma-conf.js', { 
       process: function ( contents, path ) {
         return grunt.template.process( contents, {
           data: {
@@ -603,6 +625,13 @@ module.exports = function ( grunt ) {
         });
       }
     });
+  });
+
+  /**
+   * Copying protractor-conf.js to build dir
+   */
+  grunt.registerTask('protractorConfig', 'copyin protractor-conf.js to build dir', function(){
+  	grunt.file.copy('protractor-conf.js', grunt.config( 'build_dir' ) + '/protractor-conf.js');
   });
 
 };

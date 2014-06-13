@@ -1,5 +1,7 @@
 describe('ccForm.core specs', function(){
 
+	var baseUrl = "http://127.0.0.1:4444/ccForm/build/";
+
 	beforeEach(function(){
 		if(!this.a) this.a = 'a';
 	});
@@ -7,7 +9,6 @@ describe('ccForm.core specs', function(){
 	afterEach(function(){
 
 	});
-
 
 
 	it('test1', function(){
@@ -25,6 +26,5 @@ describe('ccForm.core specs', function(){
 
 	it('test3', function(){
 
-		
 	});
 });

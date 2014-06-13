@@ -54,11 +54,6 @@ homeModule.controller('HomeCtrl', ['$scope', 'PaymentMethods', function( $scope,
 	
 	$scope.focused = function(evt){
 		$scope.focusState = angular.element(evt.currentTarget).attr('name');
-		if($scope.focusState === 'cid'){
-			$scope.cardFlipped = true;
-		} else {
-			$scope.cardFlipped = false;
-		}
 	};
 
 	var username = 'god';

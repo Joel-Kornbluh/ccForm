@@ -1,5 +1,5 @@
 <div class="card-container">
-  <div ng-class="{card: true, identified: cardClasses.identified, flipped: cardFlipped, maestro: cardClasses.maestro, dinersclub: cardClasses.dinersclub, laser: cardClasses.laser, jcb: cardClasses.jcb, unionpay: cardClasses.unionpay, discover: cardClasses.discover, mastercard: cardClasses.mastercard, amex: cardClasses.amex, visa: cardClasses.visa}">
+  <div ng-class="{card: true, identified: cardClasses.identified, flipped: focusState === 'cid', maestro: cardClasses.maestro, dinersclub: cardClasses.dinersclub, laser: cardClasses.laser, jcb: cardClasses.jcb, unionpay: cardClasses.unionpay, discover: cardClasses.discover, mastercard: cardClasses.mastercard, amex: cardClasses.amex, visa: cardClasses.visa}">
     <div class="front">
       <div class="logo visa">visa</div>
       <div class="logo mastercard">MasterCard</div>
@@ -15,7 +15,7 @@
     </div>
     <div class="back">
       <div class="bar"></div>
-      <div class="cvc display" ng-class="{focused: focusState.cid}">{{currentCC.cid | cidNumber }}</div>
+      <div class="cvc display" ng-class="{focused: focusState === 'cid'}">{{currentCC.cid | cidNumber }}</div>
       <div class="shiny"></div>
     </div>
   </div>
