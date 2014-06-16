@@ -17,6 +17,7 @@ homeModule.config(['$stateProvider', function( $stateProvider ){
   });
 }]);
 
+
 homeModule.factory('PaymentMethods', ['$resource', '$http', function($resource, $http){
 	
 	var paymentMethodsPath = 'http://127.0.0.1/temp/paymentMethods/';

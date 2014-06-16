@@ -157,6 +157,14 @@ module.exports = function ( grunt ) {
             expand: true
           }
         ]
+      },
+      build_test_config: {
+        files: [
+          {
+            src: 'protractor-conf.js',
+            dest: '<%= build_dir %>/protractor-conf.js'
+          }
+        ]
       }
     },
 
@@ -336,12 +344,14 @@ module.exports = function ( grunt ) {
           // Arguments passed to the command
         }
       },
-      build: {
+      run: {
         options: {
-          configFile: 'protractor-conf.js',
-          args: {} // Target-specific arguments
+          configFile: '<%= build_dir %>/protractor-conf.js',
+          args: {
+            seleniumPort: 4444
+          }
         }
-      },
+      }
     },
 
     /**
@@ -505,7 +515,7 @@ module.exports = function ( grunt ) {
         files: [
           '<%= app_files.jsunit %>'
         ],
-        tasks: [ /*'jshint:test',*/ 'karma:unit:run', 'protractor' ],
+        tasks: [ /*'jshint:test',*/ 'karma:unit:run'],
         options: {
           livereload: false
         }
@@ -521,30 +531,31 @@ module.exports = function ( grunt ) {
   grunt.registerTask( 'build', [
     'clean',
     'html2js',
+    /*'jshint',*/
     'less:build',
     'concat:build_css', 
     'copy:build_app_assets', 
     'copy:build_vendor_assets',
     'copy:build_appjs', 
     'copy:build_vendorjs',
+    'copy:build_test_config',
     'index:build',
     'karmaconfig',
-    'karma:continuous',
-    'protractor'
+    'karma:continuous'
   ]);
 
   /**
    * The `compile` task gets your app ready for deployment by concatenating and
-   * minifying your code.
+   * minifying.
    */
   grunt.registerTask( 'compile', [
   	'build',
-  	/*'jshint',*/
     'less:compile',
     'copy:compile_assets',
     'concat:compile_js',
     /*'closure-compiler',*/
-    'index:compile'
+    'index:compile',
+    'protractor:run'
   ]);
 
   /**
@@ -625,13 +636,6 @@ module.exports = function ( grunt ) {
         });
       }
     });
-  });
-
-  /**
-   * Copying protractor-conf.js to build dir
-   */
-  grunt.registerTask('protractorConfig', 'copyin protractor-conf.js to build dir', function(){
-  	grunt.file.copy('protractor-conf.js', grunt.config( 'build_dir' ) + '/protractor-conf.js');
   });
 
 };
